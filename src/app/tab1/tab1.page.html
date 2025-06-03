@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar >
+    <ion-title>Meus Alarmes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" >
+  
+  <!-- Botão para criar alarme -->
+  <div style="padding: 20px;">
+    <ion-button expand="block" (click)="criarAlarme()"color="tertiary">
+      <ion-icon name="add" slot="start"></ion-icon>
+      Novo Alarme
+    </ion-button>
+  </div>
+
+  <!-- Lista de alarmes -->
+  <ion-list *ngIf="alarmes.length > 0" >
+    <ion-item *ngFor="let alarme of alarmes" >
+      
+      <ion-label>
+        <h2>{{ alarme.titulo }}</h2>
+        <p>{{ formatarData(alarme.dataHora) }}</p>
+        <ion-badge [color]="alarme.ativo ? 'success' : 'medium'">
+          {{ alarme.ativo ? 'Ativo' : 'Desativado' }}
+        </ion-badge>
+      </ion-label>
+
+      <ion-button 
+        *ngIf="alarme.ativo" 
+        fill="clear" 
+        color="warning"
+        (click)="desativarAlarme(alarme)">
+        Desativar
+      </ion-button>
+
+      <ion-button 
+        fill="clear" 
+        color="danger"
+        (click)="excluirAlarme(alarme)">
+        Excluir
+      </ion-button>
+
+    </ion-item>
+  </ion-list>
+
+  <!-- Quando não tem alarmes -->
+  <div *ngIf="alarmes.length === 0" style="text-align: center; padding: 50px;">
+    <ion-icon name="alarm-outline" size="large" color="medium"></ion-icon>
+    <p>Nenhum alarme criado</p>
+  </div>
+
+</ion-content>
+
+
